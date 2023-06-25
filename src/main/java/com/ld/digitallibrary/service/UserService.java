@@ -1,10 +1,10 @@
 package com.ld.digitallibrary.service;
 
-import com.ld.digitallibrary.entity.User;
+import com.ld.digitallibrary.dto.UserDTO;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> findAll();
+    List<UserDTO> findAll();
 }

@@ -1,6 +1,6 @@
 package com.ld.digitallibrary.controller;
 
-import com.ld.digitallibrary.entity.User;
+import com.ld.digitallibrary.dto.UserDTO;
 import com.ld.digitallibrary.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/user/all")
-    public List<User> allUsers() {
+    public List<UserDTO> allUsers() {
         return userService.findAll();
     }
 
