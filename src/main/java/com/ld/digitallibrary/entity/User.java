@@ -3,6 +3,8 @@ package com.ld.digitallibrary.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 
 @Entity
 @Data
@@ -17,5 +19,6 @@ public class User {
     @Column(name = "username")
     private String username;
 
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    List<Item> itemList;
 }

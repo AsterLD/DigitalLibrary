@@ -18,8 +18,35 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
+    public UserDTO createUser(UserDTO userDTO) {
+        User user = Mapper.mapUserDTOToUser(userDTO);
+        userRepository.save(user);
+        return Mapper.mapUserToUserDTO(user);
+    }
+
+    @Override
     public List<UserDTO> findAll() {
         List<User> userList = userRepository.findAll();
         return userList.stream().map(Mapper::mapUserToUserDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDTO findUserById(long id) {
+        User user = userRepository.findById(id).orElseThrow();
+        return Mapper.mapUserToUserDTO(user);
+    }
+
+    @Override
+    public UserDTO updateUserById(UserDTO userDTO, long id) {
+        User user = userRepository.findById(id).orElseThrow();
+        Mapper.updateUser(user, userDTO);
+        userRepository.save(user);
+        return Mapper.mapUserToUserDTO(user);
+    }
+
+    @Override
+    public void deleteUserById(long id) {
+        User user = userRepository.findById(id).orElseThrow();
+        userRepository.delete(user);
     }
 }

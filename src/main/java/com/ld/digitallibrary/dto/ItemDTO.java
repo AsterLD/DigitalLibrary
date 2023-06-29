@@ -9,13 +9,14 @@ import lombok.Data;
 @Data
 public class ItemDTO {
 
-    @JsonProperty("item_id")
-    private Long id;
 
     @JsonProperty("name")
     private String name;
 
     @JsonProperty("item_type")
     private String type;
+
+    @JsonProperty("user_id")
+    private Long userId;
 
 }

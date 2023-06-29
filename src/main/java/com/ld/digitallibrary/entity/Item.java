@@ -20,7 +20,7 @@ public class Item {
     @Column(name = "type")
     private String type;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
