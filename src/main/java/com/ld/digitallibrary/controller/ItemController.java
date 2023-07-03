@@ -19,14 +19,19 @@ public class ItemController {
         return itemService.createItem(ItemDTO);
     }
 
+    @GetMapping("/item/all")
+    public List<ItemDTO> getAllItems() {
+        return itemService.findAll();
+    }
+
     @GetMapping("/item/{id}")
     public ItemDTO getItemById(@PathVariable("id") Long itemId) {
         return itemService.findItemById(itemId);
     }
 
-    @GetMapping("/item/all")
-    public List<ItemDTO> getAllItems() {
-        return itemService.findAll();
+    @GetMapping("/item/user/{user_id}")
+    public List<ItemDTO> getAllItemsByUserId(@PathVariable("user_id") Long userId) {
+        return itemService.findAllByUserId(userId);
     }
 
     @PutMapping(value = "/item/{id}/update")
