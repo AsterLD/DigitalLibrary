@@ -46,6 +46,9 @@ public class Mapper {
             if (Objects.nonNull(ItemDTO.getType())) {
                 item.setType(ItemDTO.getType());
             }
+            if (Objects.nonNull(ItemDTO.getUploadDate())) {
+                item.setUploadDate(ItemDTO.getUploadDate());
+            }
         }
     }
 }
