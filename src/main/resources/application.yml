@@ -23,3 +23,10 @@ spring:
     username: ${database.credentials.username}
     password: ${database.credentials.password}
     driverClassName: org.postgresql.Driver
+
+aws:
+  bucket-name: digital-library
+  access-key-id: accessKey1
+  secret-access-key: verySecretKey1
+  service-endpoint-url: http://0.0.0.0:8000/
+  service-region: us-west-2

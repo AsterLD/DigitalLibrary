@@ -5,10 +5,13 @@ import com.ld.digitallibrary.entity.Item;
 import com.ld.digitallibrary.repo.ItemRepository;
 import com.ld.digitallibrary.repo.UserRepository;
 import com.ld.digitallibrary.service.ItemService;
+import com.ld.digitallibrary.service.S3Service;
 import com.ld.digitallibrary.utils.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,12 +23,21 @@ public class ItemServiceImpl implements ItemService {
 
     private final UserRepository userRepository;
 
+    private final S3Service s3Service;
+
 
     @Override
-    public ItemDTO createItem(ItemDTO itemDTO) {
+    public ItemDTO createItem(ItemDTO itemDTO, MultipartFile file) {
         Item item = new Item();
         Mapper.updateItem(item, itemDTO);
         item.setUser(userRepository.findById(itemDTO.getUserId()).orElseThrow());
+        try {
+            String filename = s3Service.uploadFile(file.getInputStream(), file.getOriginalFilename());
+            item.setName(filename);
+        } catch (IOException e) {
+
+        }
+
         itemRepository.save(item);
         return Mapper.mapItemToItemDTO(item);
     }
@@ -64,4 +76,6 @@ public class ItemServiceImpl implements ItemService {
         Item item = itemRepository.findById(id).orElseThrow();
         itemRepository.delete(item);
     }
+
+
 }

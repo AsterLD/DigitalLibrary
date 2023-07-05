@@ -4,8 +4,11 @@ import com.ld.digitallibrary.dto.ItemDTO;
 import com.ld.digitallibrary.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 
 @RestController
@@ -14,9 +17,9 @@ public class ItemController {
 
     private final ItemService itemService;
 
-    @PostMapping("/item")
-    public ItemDTO createItem(@RequestBody ItemDTO ItemDTO) {
-        return itemService.createItem(ItemDTO);
+    @PostMapping(value = "/item", consumes = MULTIPART_FORM_DATA_VALUE)
+    public ItemDTO createItem(ItemDTO itemDTO, @RequestBody MultipartFile file) {
+        return itemService.createItem(itemDTO, file);
     }
 
     @GetMapping("/item/all")
