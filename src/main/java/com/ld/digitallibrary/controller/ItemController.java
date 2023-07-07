@@ -17,9 +17,14 @@ public class ItemController {
 
     private final ItemService itemService;
 
-    @PostMapping(value = "/item", consumes = MULTIPART_FORM_DATA_VALUE)
-    public ItemDTO createItem(ItemDTO itemDTO, @RequestBody MultipartFile file) {
-        return itemService.createItem(itemDTO, file);
+    @PostMapping(value = "/item")
+    public ItemDTO createItem(@RequestBody ItemDTO itemDTO) {
+        return itemService.createItem(itemDTO);
+    }
+
+    @PostMapping(value = "/item/{id}", consumes = MULTIPART_FORM_DATA_VALUE)
+    public String uploadFile(@PathVariable("id") Long itemId, @RequestBody MultipartFile file) {
+        return itemService.uploadFile(itemId, file);
     }
 
     @GetMapping("/item/all")

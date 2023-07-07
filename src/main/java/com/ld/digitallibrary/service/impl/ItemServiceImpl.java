@@ -27,19 +27,26 @@ public class ItemServiceImpl implements ItemService {
 
 
     @Override
-    public ItemDTO createItem(ItemDTO itemDTO, MultipartFile file) {
+    public ItemDTO createItem(ItemDTO itemDTO) {
         Item item = new Item();
-        Mapper.updateItem(item, itemDTO);
         item.setUser(userRepository.findById(itemDTO.getUserId()).orElseThrow());
+        Mapper.updateItem(item, itemDTO);
+        itemRepository.save(item);
+        return Mapper.mapItemToItemDTO(item);
+    }
+
+    @Override
+    public String uploadFile(Long itemId, MultipartFile file) {
+        Item item = itemRepository.findById(itemId).orElseThrow();
+        String filename = null;
         try {
-            String filename = s3Service.uploadFile(file.getInputStream(), file.getOriginalFilename());
+            filename = s3Service.uploadFile(file.getInputStream(), file.getOriginalFilename());
             item.setName(filename);
+            itemRepository.save(item);
         } catch (IOException e) {
 
         }
-
-        itemRepository.save(item);
-        return Mapper.mapItemToItemDTO(item);
+        return filename;
     }
 
     @Override

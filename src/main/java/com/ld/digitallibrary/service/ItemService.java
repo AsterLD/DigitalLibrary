@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface ItemService {
 
-    ItemDTO createItem(ItemDTO ItemDTO, MultipartFile file);
+    ItemDTO createItem(ItemDTO itemDTO);
+
+    String uploadFile(Long itemId, MultipartFile file);
 
     List<ItemDTO> findAll();
 
