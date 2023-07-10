@@ -1,5 +1,6 @@
 package com.ld.digitallibrary.service.impl;
 
+import com.ld.digitallibrary.dto.FileDTO;
 import com.ld.digitallibrary.dto.ItemDTO;
 import com.ld.digitallibrary.entity.Item;
 import com.ld.digitallibrary.repo.ItemRepository;
@@ -59,6 +60,12 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemDTO> findAllByUserId(Long userId) {
         List<Item> itemList = itemRepository.findAllItemsByUserId(userId);
         return itemList.stream().map(Mapper::mapItemToItemDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public FileDTO getFileByItemId(Long id) {
+        Item item = itemRepository.findById(id).orElseThrow();
+        return new FileDTO(item.getName(), s3Service.downloadFile(item.getName()));
     }
 
     @Override

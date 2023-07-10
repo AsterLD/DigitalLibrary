@@ -1,8 +1,12 @@
 package com.ld.digitallibrary.controller;
 
+import com.ld.digitallibrary.dto.FileDTO;
 import com.ld.digitallibrary.dto.ItemDTO;
 import com.ld.digitallibrary.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,6 +39,15 @@ public class ItemController {
     @GetMapping("/item/{id}")
     public ItemDTO getItemById(@PathVariable("id") Long itemId) {
         return itemService.findItemById(itemId);
+    }
+
+    @GetMapping("/item/{id}/file")
+    public ResponseEntity<byte[]> getFileByItemId(@PathVariable("id") Long itemId) {
+        FileDTO fileDTO = itemService.getFileByItemId(itemId);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDTO.getFileName() + "\"")
+                .body(fileDTO.getFileBytes());
     }
 
     @GetMapping("/item/user/{user_id}")

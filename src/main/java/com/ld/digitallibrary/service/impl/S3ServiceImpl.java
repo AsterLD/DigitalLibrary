@@ -24,7 +24,7 @@ public class S3ServiceImpl implements S3Service {
 
     @Override
     public String uploadFile(InputStream is, String filename) {
-        if (!s3client.doesBucketExist(bucketName)) {
+        if (!s3client.doesBucketExistV2(bucketName)) {
             s3client.createBucket(bucketName);
         }
         ObjectMetadata objectMetadata = new ObjectMetadata();
