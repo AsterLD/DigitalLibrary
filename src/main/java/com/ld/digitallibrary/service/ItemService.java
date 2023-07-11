@@ -16,11 +16,15 @@ public interface ItemService {
 
     List<ItemDTO> findAllByUserId(Long userId);
 
-    FileDTO getFileByItemId(Long id);
+    FileDTO getFileByItemId(Long itemId);
 
-    ItemDTO findItemById(Long id);
+    String updateFile(Long itemId, MultipartFile file);
 
-    ItemDTO updateItemById(ItemDTO ItemDTO, Long id);
+    ItemDTO findItemById(Long itemId);
 
-    void deleteItemById(Long id);
+    ItemDTO updateItemById(ItemDTO ItemDTO, Long itemId);
+
+    void deleteItemById(Long itemId);
+
+    void deleteFileByItemId(Long itemId);
 }

@@ -10,9 +10,9 @@ public interface UserService {
 
     List<UserDTO> findAll();
 
-    UserDTO findUserById(long id);
+    UserDTO findUserById(long itemId);
 
     UserDTO updateUserById(UserDTO userDTO, long id);
 
-    void deleteUserById(long id);
+    void deleteUserById(long itemId);
 }

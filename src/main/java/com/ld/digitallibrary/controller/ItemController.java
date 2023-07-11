@@ -26,8 +26,8 @@ public class ItemController {
         return itemService.createItem(itemDTO);
     }
 
-    @PostMapping(value = "/item/{id}", consumes = MULTIPART_FORM_DATA_VALUE)
-    public String uploadFile(@PathVariable("id") Long itemId, @RequestBody MultipartFile file) {
+    @PostMapping(value = "/item/{itemId}", consumes = MULTIPART_FORM_DATA_VALUE)
+    public String uploadFile(@PathVariable("itemId") Long itemId, @RequestBody MultipartFile file) {
         return itemService.uploadFile(itemId, file);
     }
 
@@ -36,13 +36,13 @@ public class ItemController {
         return itemService.findAll();
     }
 
-    @GetMapping("/item/{id}")
-    public ItemDTO getItemById(@PathVariable("id") Long itemId) {
+    @GetMapping("/item/{itemId}")
+    public ItemDTO getItemById(@PathVariable("itemId") Long itemId) {
         return itemService.findItemById(itemId);
     }
 
-    @GetMapping("/item/{id}/file")
-    public ResponseEntity<byte[]> getFileByItemId(@PathVariable("id") Long itemId) {
+    @GetMapping("/item/{itemId}/file")
+    public ResponseEntity<byte[]> getFileByItemId(@PathVariable("itemId") Long itemId) {
         FileDTO fileDTO = itemService.getFileByItemId(itemId);
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
@@ -50,19 +50,30 @@ public class ItemController {
                 .body(fileDTO.getFileBytes());
     }
 
-    @GetMapping("/item/user/{user_id}")
-    public List<ItemDTO> getAllItemsByUserId(@PathVariable("user_id") Long userId) {
+    @GetMapping("/item/user/{userId}")
+    public List<ItemDTO> getAllItemsByUserId(@PathVariable("userId") Long userId) {
         return itemService.findAllByUserId(userId);
     }
 
-    @PutMapping(value = "/item/{id}/update")
-    public ItemDTO updateItemById(@PathVariable("id") Long itemId, @RequestBody ItemDTO itemDTO) {
+    @PutMapping(value = "/item/{itemId}/update")
+    public ItemDTO updateItemById(@PathVariable("itemId") Long itemId, @RequestBody ItemDTO itemDTO) {
         return itemService.updateItemById(itemDTO, itemId);
     }
 
-    @DeleteMapping("/item/{id}/delete")
-    public long deleteItemById(@PathVariable("id") Long itemId) {
+    @PutMapping(value = "/item/{userId}/update-file", consumes = MULTIPART_FORM_DATA_VALUE)
+    public String updateFileByItemId(@PathVariable("userId") Long itemId, @RequestBody MultipartFile file) {
+        return itemService.updateFile(itemId, file);
+    }
+
+    @DeleteMapping("/item/{userId}/delete")
+    public long deleteItemById(@PathVariable("userId") Long itemId) {
         itemService.deleteItemById(itemId);
+        return itemId;
+    }
+
+    @DeleteMapping("/item/{userId}/delete-file")
+    public long deleteFileByItemId(@PathVariable("userId") Long itemId) {
+        itemService.deleteFileByItemId(itemId);
         return itemId;
     }
 

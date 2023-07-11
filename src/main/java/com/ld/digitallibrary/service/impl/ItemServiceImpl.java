@@ -63,21 +63,27 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public FileDTO getFileByItemId(Long id) {
-        Item item = itemRepository.findById(id).orElseThrow();
+    public FileDTO getFileByItemId(Long itemId) {
+        Item item = itemRepository.findById(itemId).orElseThrow();
         return new FileDTO(item.getName(), s3Service.downloadFile(item.getName()));
     }
 
     @Override
-    public ItemDTO findItemById(Long id) {
-        Item item = itemRepository.findById(id).orElseThrow();
+    public String updateFile(Long itemId, MultipartFile file) {
+        deleteFileByItemId(itemId);
+        return uploadFile(itemId, file);
+    }
+
+    @Override
+    public ItemDTO findItemById(Long itemId) {
+        Item item = itemRepository.findById(itemId).orElseThrow();
         return Mapper.mapItemToItemDTO(item);
 
     }
 
     @Override
-    public ItemDTO updateItemById(ItemDTO itemDTO, Long id) {
-        Item itemFromDb = itemRepository.findById(id).orElseThrow();
+    public ItemDTO updateItemById(ItemDTO itemDTO, Long itemId) {
+        Item itemFromDb = itemRepository.findById(itemId).orElseThrow();
         Mapper.updateItem(itemFromDb, itemDTO);
         itemFromDb.setUser(userRepository.findById(itemDTO.getUserId()).orElseThrow());
         itemRepository.save(itemFromDb);
@@ -86,9 +92,17 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void deleteItemById(Long id) {
-        Item item = itemRepository.findById(id).orElseThrow();
+    public void deleteItemById(Long itemId) {
+        Item item = itemRepository.findById(itemId).orElseThrow();
         itemRepository.delete(item);
+    }
+
+    @Override
+    public void deleteFileByItemId(Long itemId) {
+        Item item = itemRepository.findById(itemId).orElseThrow();
+        s3Service.deleteFile(item.getName());
+        item.setName(null);
+        itemRepository.save(item);
     }
 
 
