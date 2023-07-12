@@ -6,13 +6,14 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
+import com.ld.digitallibrary.exception.FileException;
 import com.ld.digitallibrary.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 @Service
 @RequiredArgsConstructor
@@ -23,12 +24,16 @@ public class S3ServiceImpl implements S3Service {
     private String bucketName;
 
     @Override
-    public String uploadFile(InputStream is, String filename) {
+    public String uploadFile(MultipartFile file, String filename) {
         if (!s3client.doesBucketExistV2(bucketName)) {
             s3client.createBucket(bucketName);
         }
         ObjectMetadata objectMetadata = new ObjectMetadata();
-        s3client.putObject(bucketName, filename, is, objectMetadata);
+        try {
+            s3client.putObject(bucketName, filename, file.getInputStream(), objectMetadata);
+        } catch (IOException e) {
+            throw new FileException("File cannot be converted to input stream", e);
+        }
         return filename;
     }
 
@@ -38,10 +43,9 @@ public class S3ServiceImpl implements S3Service {
         s3object = s3client.getObject(bucketName, filename);
         S3ObjectInputStream inputStream = s3object.getObjectContent();
         try {
-            byte[] content = IOUtils.toByteArray(inputStream);
-            return content;
+            return IOUtils.toByteArray(inputStream);
         } catch (IOException e) {
-            return null;
+            throw new FileException("S3 storage input stream cannot be converted to byte array", e);
         }
     }
 

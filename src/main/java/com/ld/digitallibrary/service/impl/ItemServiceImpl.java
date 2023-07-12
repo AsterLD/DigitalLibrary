@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,14 +38,9 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public String uploadFile(Long itemId, MultipartFile file) {
         Item item = itemRepository.findById(itemId).orElseThrow();
-        String filename = null;
-        try {
-            filename = s3Service.uploadFile(file.getInputStream(), file.getOriginalFilename());
-            item.setName(filename);
-            itemRepository.save(item);
-        } catch (IOException e) {
-
-        }
+        String filename = s3Service.uploadFile(file, file.getOriginalFilename());
+        item.setName(filename);
+        itemRepository.save(item);
         return filename;
     }
 

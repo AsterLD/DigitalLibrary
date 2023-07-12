@@ -1,10 +1,10 @@
 package com.ld.digitallibrary.service;
 
-import java.io.InputStream;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface S3Service {
 
-    String uploadFile(InputStream is, String filename);
+    String uploadFile(MultipartFile file, String filename);
 
     byte[] downloadFile(String filename);
 
