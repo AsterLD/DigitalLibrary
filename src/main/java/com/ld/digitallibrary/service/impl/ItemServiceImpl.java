@@ -38,7 +38,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public String uploadFile(Long itemId, MultipartFile file) {
         Item item = itemRepository.findById(itemId).orElseThrow();
-        String filename = s3Service.uploadFile(file, file.getOriginalFilename());
+        String filename = s3Service.uploadFile(file);
         item.setName(filename);
         itemRepository.save(item);
         return filename;

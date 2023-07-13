@@ -3,6 +3,7 @@ package com.ld.digitallibrary.controller;
 import com.ld.digitallibrary.dto.FileDTO;
 import com.ld.digitallibrary.dto.ItemDTO;
 import com.ld.digitallibrary.service.ItemService;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -61,7 +62,7 @@ public class ItemController {
     }
 
     @PutMapping(value = "/item/{userId}/update-file", consumes = MULTIPART_FORM_DATA_VALUE)
-    public String updateFileByItemId(@PathVariable("userId") Long itemId, @RequestBody MultipartFile file) {
+    public String updateFileByItemId(@PathVariable("userId") Long itemId, @Parameter(required = true) @RequestBody MultipartFile file) {
         return itemService.updateFile(itemId, file);
     }
 
