@@ -98,6 +98,4 @@ public class ItemServiceImpl implements ItemService {
         item.setName(null);
         itemRepository.save(item);
     }
-
-
 }

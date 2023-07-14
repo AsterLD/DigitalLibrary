@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Data
 public class ItemDTO {
 
-
     @JsonProperty("name")
     private String name;
 
