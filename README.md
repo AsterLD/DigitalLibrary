@@ -9,5 +9,6 @@ __Technologies:__
 * Spring Boot;
 * Spring Data JPA;
 * Hibernate;
+* Liquibase;
 * PostgreSQL as Database; 
 * AWS S3 for file storage.
