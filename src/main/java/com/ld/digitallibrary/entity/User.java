@@ -2,6 +2,8 @@ package com.ld.digitallibrary.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.List;
 
@@ -20,6 +22,10 @@ public class User {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "group_list")
+    @JdbcTypeCode(SqlTypes.JSON)
+    private List<Group> groupList;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<Item> itemList;
