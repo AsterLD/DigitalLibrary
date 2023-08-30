@@ -53,7 +53,7 @@ public class GroupServiceImpl implements GroupService {
     public GroupWithUsersDTO addUserToGroup(Long groupId, Long userId) {
         Group group = groupRepository.findById(groupId).orElseThrow();
         User user = userRepository.findById(userId).orElseThrow();
-        group.setUsers(Collections.singleton(user));
+        group.getUsers().add(user);
         groupRepository.save(group);
         return Mapper.mapGroupToGroupWithUsersDTO(group);
     }
