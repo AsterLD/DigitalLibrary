@@ -5,7 +5,9 @@ import lombok.Data;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -23,10 +25,9 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "group_list")
-    @JdbcTypeCode(SqlTypes.JSON)
-    private List<Group> groupList;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<Item> itemList;
+
+    @ManyToMany(mappedBy = "users")
+    private Set<Group> groups = new HashSet<>();
 }

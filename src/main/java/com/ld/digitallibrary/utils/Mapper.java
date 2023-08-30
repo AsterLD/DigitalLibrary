@@ -1,7 +1,10 @@
 package com.ld.digitallibrary.utils;
 
+import com.ld.digitallibrary.dto.GroupDTO;
+import com.ld.digitallibrary.dto.GroupWithUsersDTO;
 import com.ld.digitallibrary.dto.ItemDTO;
 import com.ld.digitallibrary.dto.UserDTO;
+import com.ld.digitallibrary.entity.Group;
 import com.ld.digitallibrary.entity.Item;
 import com.ld.digitallibrary.entity.User;
 import org.modelmapper.ModelMapper;
@@ -48,6 +51,29 @@ public class Mapper {
             }
             if (Objects.nonNull(ItemDTO.getUploadDate())) {
                 item.setUploadDate(ItemDTO.getUploadDate());
+            }
+        }
+    }
+
+    public static GroupDTO mapGroupToGroupDTO(Group group) {
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(group, GroupDTO.class);
+    }
+
+    public static GroupWithUsersDTO mapGroupToGroupWithUsersDTO(Group group) {
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(group, GroupWithUsersDTO.class);
+    }
+
+    public static Group mapGroupDTOToGroup(GroupDTO groupDTO) {
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(groupDTO, Group.class);
+    }
+
+    public static void updateGroup(Group group, GroupDTO groupDTO) {
+        if (Objects.nonNull(groupDTO)) {
+            if (Objects.nonNull(groupDTO.getName())) {
+                group.setName(groupDTO.getName());
             }
         }
     }
