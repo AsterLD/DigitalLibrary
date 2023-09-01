@@ -1,7 +1,7 @@
 package com.ld.digitallibrary.utils;
 
 import com.ld.digitallibrary.dto.GroupDTO;
-import com.ld.digitallibrary.dto.GroupWithUsersDTO;
+import com.ld.digitallibrary.dto.GroupWithFullInfoDTO;
 import com.ld.digitallibrary.dto.ItemDTO;
 import com.ld.digitallibrary.dto.UserDTO;
 import com.ld.digitallibrary.entity.Group;
@@ -60,9 +60,9 @@ public class Mapper {
         return mapper.map(group, GroupDTO.class);
     }
 
-    public static GroupWithUsersDTO mapGroupToGroupWithUsersDTO(Group group) {
+    public static GroupWithFullInfoDTO mapGroupToGroupWithUsersDTO(Group group) {
         ModelMapper mapper = new ModelMapper();
-        return mapper.map(group, GroupWithUsersDTO.class);
+        return mapper.map(group, GroupWithFullInfoDTO.class);
     }
 
     public static Group mapGroupDTOToGroup(GroupDTO groupDTO) {

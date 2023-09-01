@@ -7,11 +7,14 @@ import java.util.Set;
 
 
 @Data
-public class GroupWithUsersDTO {
+public class GroupWithFullInfoDTO {
 
     @JsonProperty("name")
     private String name;
 
     @JsonProperty("users")
     private Set<UserDTO> users;
+
+    @JsonProperty("items")
+    private Set<ItemDTO> items;
 }

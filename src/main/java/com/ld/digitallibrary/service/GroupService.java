@@ -1,7 +1,7 @@
 package com.ld.digitallibrary.service;
 
 import com.ld.digitallibrary.dto.GroupDTO;
-import com.ld.digitallibrary.dto.GroupWithUsersDTO;
+import com.ld.digitallibrary.dto.GroupWithFullInfoDTO;
 
 import java.util.List;
 
@@ -11,11 +11,13 @@ public interface GroupService {
 
     List<GroupDTO> findAllGroups();
 
-    GroupWithUsersDTO findGroupById(long groupId);
+    GroupWithFullInfoDTO findGroupById(long groupId);
 
     GroupDTO updateGroupById(GroupDTO groupDTO, long groupId);
 
-    GroupWithUsersDTO addUserToGroup(Long groupId, Long userId);
+    GroupWithFullInfoDTO addUserToGroup(Long groupId, Long userId);
+
+    GroupWithFullInfoDTO addItemToGroup(Long groupId, Long itemId);
 
     void deleteGroupById(long groupId);
 }

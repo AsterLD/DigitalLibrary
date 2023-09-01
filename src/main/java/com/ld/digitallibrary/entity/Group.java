@@ -28,4 +28,12 @@ public class Group {
             inverseJoinColumns = { @JoinColumn(name = "user_id") }
     )
     private Set<User> users = new HashSet<>();
+
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "items_groups",
+            joinColumns = { @JoinColumn(name = "group_id") },
+            inverseJoinColumns = { @JoinColumn(name = "item_id") }
+    )
+    private Set<Item> items = new HashSet<>();
 }

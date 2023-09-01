@@ -1,7 +1,7 @@
 package com.ld.digitallibrary.controller;
 
 import com.ld.digitallibrary.dto.GroupDTO;
-import com.ld.digitallibrary.dto.GroupWithUsersDTO;
+import com.ld.digitallibrary.dto.GroupWithFullInfoDTO;
 import com.ld.digitallibrary.service.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class GroupController {
     }
 
     @GetMapping("/group/{id}")
-    public GroupWithUsersDTO getGroupById(@PathVariable("id") Long groupId) {
+    public GroupWithFullInfoDTO getGroupById(@PathVariable("id") Long groupId) {
         return groupService.findGroupById(groupId);
     }
 
@@ -35,8 +35,13 @@ public class GroupController {
     }
 
     @PutMapping(value = "/group/{group_id}/user/{user_id}")
-    public GroupWithUsersDTO addUserToGroup(@PathVariable("group_id") Long groupId, @PathVariable("user_id") Long userId) {
+    public GroupWithFullInfoDTO addUserToGroup(@PathVariable("group_id") Long groupId, @PathVariable("user_id") Long userId) {
         return groupService.addUserToGroup(groupId, userId);
+    }
+
+    @PutMapping(value = "/group/{group_id}/item/{item_id}")
+    public GroupWithFullInfoDTO addItemToGroup(@PathVariable("group_id") Long groupId, @PathVariable("item_id") Long itemId) {
+        return groupService.addItemToGroup(groupId, itemId);
     }
 
     @DeleteMapping("/group/{id}/delete")
