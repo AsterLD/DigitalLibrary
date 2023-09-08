@@ -1,7 +1,6 @@
 package com.ld.digitallibrary.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
 import lombok.Data;
 
 
