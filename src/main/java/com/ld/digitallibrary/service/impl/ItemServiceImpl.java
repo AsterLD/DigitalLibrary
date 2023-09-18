@@ -9,6 +9,7 @@ import com.ld.digitallibrary.service.ItemService;
 import com.ld.digitallibrary.service.S3Service;
 import com.ld.digitallibrary.utils.Mapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,8 +46,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDTO> findAll() {
-        List<Item> itemList = itemRepository.findAll();
+    public List<ItemDTO> findAll(Integer page, Integer pageSize) {
+        List<Item> itemList = itemRepository.findAll(PageRequest.of(page -1, pageSize)).getContent();
         return itemList.stream().map(Mapper::mapItemToItemDTO).collect(Collectors.toList());
     }
 

@@ -12,7 +12,7 @@ public interface ItemService {
 
     String uploadFile(Long itemId, MultipartFile file);
 
-    List<ItemDTO> findAll();
+    List<ItemDTO> findAll(Integer page, Integer pageSize);
 
     List<ItemDTO> findAllByUserId(Long userId);
 

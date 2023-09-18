@@ -11,6 +11,7 @@ import com.ld.digitallibrary.repo.UserRepository;
 import com.ld.digitallibrary.service.GroupService;
 import com.ld.digitallibrary.utils.Mapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,8 +34,8 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<GroupDTO> findAllGroups() {
-        List<Group> groupList = groupRepository.findAll();
+    public List<GroupDTO> findAllGroups(Integer page, Integer pageSize) {
+        List<Group> groupList = groupRepository.findAll(PageRequest.of(page -1, pageSize)).getContent();
         return groupList.stream().map(Mapper::mapGroupToGroupDTO).collect(Collectors.toList());
     }
 

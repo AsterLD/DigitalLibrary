@@ -19,8 +19,9 @@ public class UserController {
     }
 
     @GetMapping("/user/all")
-    public List<UserDTO> getAllUsers() {
-        return userService.findAll();
+    public List<UserDTO> getAllUsers(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                     @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+        return userService.findAll(page, pageSize);
     }
 
     @GetMapping("/user/{id}")

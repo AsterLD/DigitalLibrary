@@ -9,7 +9,7 @@ public interface GroupService {
 
     GroupDTO createGroup(GroupDTO groupDTO);
 
-    List<GroupDTO> findAllGroups();
+    List<GroupDTO> findAllGroups(Integer page, Integer pageSize);
 
     GroupWithFullInfoDTO findGroupById(long groupId);
 

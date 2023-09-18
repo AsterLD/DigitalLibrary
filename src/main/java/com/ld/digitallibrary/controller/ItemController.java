@@ -32,8 +32,9 @@ public class ItemController {
     }
 
     @GetMapping("/item/all")
-    public List<ItemDTO> getAllItems() {
-        return itemService.findAll();
+    public List<ItemDTO> getAllItems(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                     @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+        return itemService.findAll(page, pageSize);
     }
 
     @GetMapping("/item/{itemId}")
@@ -61,7 +62,8 @@ public class ItemController {
     }
 
     @PutMapping(value = "/item/{userId}/update-file", consumes = MULTIPART_FORM_DATA_VALUE)
-    public String updateFileByItemId(@PathVariable("userId") Long itemId, @Parameter(required = true) @RequestBody MultipartFile file) {
+    public String updateFileByItemId(@PathVariable("userId") Long itemId, @Parameter(required = true)
+    @RequestBody MultipartFile file) {
         return itemService.updateFile(itemId, file);
     }
 

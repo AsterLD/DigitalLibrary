@@ -20,8 +20,9 @@ public class GroupController {
     }
 
     @GetMapping("/group/all")
-    public List<GroupDTO> getAllGroups() {
-        return groupService.findAllGroups();
+    public List<GroupDTO> getAllGroups(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                       @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+        return groupService.findAllGroups(page, pageSize);
     }
 
     @GetMapping("/group/{id}")
@@ -35,12 +36,14 @@ public class GroupController {
     }
 
     @PutMapping(value = "/group/{group_id}/user/{user_id}")
-    public GroupWithFullInfoDTO addUserToGroup(@PathVariable("group_id") Long groupId, @PathVariable("user_id") Long userId) {
+    public GroupWithFullInfoDTO addUserToGroup(@PathVariable("group_id") Long groupId,
+                                               @PathVariable("user_id") Long userId) {
         return groupService.addUserToGroup(groupId, userId);
     }
 
     @PutMapping(value = "/group/{group_id}/item/{item_id}")
-    public GroupWithFullInfoDTO addItemToGroup(@PathVariable("group_id") Long groupId, @PathVariable("item_id") Long itemId) {
+    public GroupWithFullInfoDTO addItemToGroup(@PathVariable("group_id") Long groupId,
+                                               @PathVariable("item_id") Long itemId) {
         return groupService.addItemToGroup(groupId, itemId);
     }
 

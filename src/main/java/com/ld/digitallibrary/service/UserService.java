@@ -8,7 +8,7 @@ public interface UserService {
 
     UserDTO createUser(UserDTO userDTO);
 
-    List<UserDTO> findAll();
+    List<UserDTO> findAll(Integer page, Integer pageSize);
 
     UserDTO findUserById(long itemId);
 
