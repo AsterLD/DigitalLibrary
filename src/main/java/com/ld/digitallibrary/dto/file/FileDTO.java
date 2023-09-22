@@ -1,4 +1,4 @@
-package com.ld.digitallibrary.dto;
+package com.ld.digitallibrary.dto.file;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

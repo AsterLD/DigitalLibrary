@@ -1,11 +1,15 @@
-package com.ld.digitallibrary.dto;
+package com.ld.digitallibrary.dto.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 
 @Data
-public class UserDTO {
+public class SavableUserDTO {
+
+    @JsonIgnore
+    private Long id;
 
     @JsonProperty("username")
     private String username;

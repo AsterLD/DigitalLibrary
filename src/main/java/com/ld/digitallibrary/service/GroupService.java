@@ -1,23 +1,24 @@
 package com.ld.digitallibrary.service;
 
-import com.ld.digitallibrary.dto.GroupDTO;
-import com.ld.digitallibrary.dto.GroupWithFullInfoDTO;
+import com.ld.digitallibrary.dto.group.ReturnableGroupDTO;
+import com.ld.digitallibrary.dto.group.ReturnableFullGroupDTO;
+import com.ld.digitallibrary.dto.group.SavableGroupDTO;
 
 import java.util.List;
 
 public interface GroupService {
 
-    GroupDTO createGroup(GroupDTO groupDTO);
+    ReturnableGroupDTO createGroup(SavableGroupDTO savableGroupDTO);
 
-    List<GroupDTO> findAllGroups(Integer page, Integer pageSize);
+    List<ReturnableGroupDTO> findAllGroups(Integer page, Integer pageSize);
 
-    GroupWithFullInfoDTO findGroupById(long groupId);
+    ReturnableFullGroupDTO findGroupById(long groupId);
 
-    GroupDTO updateGroupById(GroupDTO groupDTO, long groupId);
+    ReturnableGroupDTO updateGroupById(SavableGroupDTO savableGroupDTO, long groupId);
 
-    GroupWithFullInfoDTO addUserToGroup(Long groupId, Long userId);
+    ReturnableFullGroupDTO addUserToGroup(Long groupId, Long userId);
 
-    GroupWithFullInfoDTO addItemToGroup(Long groupId, Long itemId);
+    ReturnableFullGroupDTO addItemToGroup(Long groupId, Long itemId);
 
     void deleteGroupById(long groupId);
 }

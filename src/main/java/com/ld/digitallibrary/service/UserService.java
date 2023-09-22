@@ -1,18 +1,19 @@
 package com.ld.digitallibrary.service;
 
-import com.ld.digitallibrary.dto.UserDTO;
+import com.ld.digitallibrary.dto.user.ReturnableUserDTO;
+import com.ld.digitallibrary.dto.user.SavableUserDTO;
 
 import java.util.List;
 
 public interface UserService {
 
-    UserDTO createUser(UserDTO userDTO);
+    ReturnableUserDTO createUser(SavableUserDTO savableUserDTO);
 
-    List<UserDTO> findAll(Integer page, Integer pageSize);
+    List<ReturnableUserDTO> findAll(Integer page, Integer pageSize);
 
-    UserDTO findUserById(long itemId);
+    ReturnableUserDTO findUserById(long itemId);
 
-    UserDTO updateUserById(UserDTO userDTO, long id);
+    ReturnableUserDTO updateUserById(ReturnableUserDTO returnableUserDTO, long id);
 
     void deleteUserById(long itemId);
 }

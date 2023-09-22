@@ -1,6 +1,7 @@
 package com.ld.digitallibrary.controller;
 
-import com.ld.digitallibrary.dto.UserDTO;
+import com.ld.digitallibrary.dto.user.ReturnableUserDTO;
+import com.ld.digitallibrary.dto.user.SavableUserDTO;
 import com.ld.digitallibrary.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,24 +15,24 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/user")
-    public UserDTO createUser(@RequestBody UserDTO userDTO) {
-        return userService.createUser(userDTO);
+    public ReturnableUserDTO createUser(@RequestBody SavableUserDTO savableUserDTO) {
+        return userService.createUser(savableUserDTO);
     }
 
     @GetMapping("/user/all")
-    public List<UserDTO> getAllUsers(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                     @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+    public List<ReturnableUserDTO> getAllUsers(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                               @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
         return userService.findAll(page, pageSize);
     }
 
     @GetMapping("/user/{id}")
-    public UserDTO getUserById(@PathVariable("id") Long userId) {
+    public ReturnableUserDTO getUserById(@PathVariable("id") Long userId) {
         return userService.findUserById(userId);
     }
 
     @PutMapping(value = "/user/{id}/update")
-    public UserDTO updateUserById(@PathVariable("id") Long userId, @RequestBody UserDTO userDTO) {
-        return userService.updateUserById(userDTO, userId);
+    public ReturnableUserDTO updateUserById(@PathVariable("id") Long userId, @RequestBody ReturnableUserDTO returnableUserDTO) {
+        return userService.updateUserById(returnableUserDTO, userId);
     }
 
     @DeleteMapping("/user/{id}/delete")

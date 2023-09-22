@@ -1,5 +1,6 @@
-package com.ld.digitallibrary.dto;
+package com.ld.digitallibrary.dto.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -7,7 +8,10 @@ import java.time.LocalDate;
 
 
 @Data
-public class ItemDTO {
+public class ReturnableItemDTO {
+
+    @JsonProperty("id")
+    private Long id;
 
     @JsonProperty("name")
     private String name;

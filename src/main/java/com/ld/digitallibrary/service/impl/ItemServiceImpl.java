@@ -1,13 +1,15 @@
 package com.ld.digitallibrary.service.impl;
 
-import com.ld.digitallibrary.dto.FileDTO;
-import com.ld.digitallibrary.dto.ItemDTO;
+import com.ld.digitallibrary.dto.file.FileDTO;
+import com.ld.digitallibrary.dto.item.ReturnableItemDTO;
+import com.ld.digitallibrary.dto.item.SavableItemDTO;
 import com.ld.digitallibrary.entity.Item;
 import com.ld.digitallibrary.repo.ItemRepository;
 import com.ld.digitallibrary.repo.UserRepository;
 import com.ld.digitallibrary.service.ItemService;
 import com.ld.digitallibrary.service.S3Service;
-import com.ld.digitallibrary.utils.Mapper;
+import com.ld.digitallibrary.utils.ItemMapper;
+import com.ld.digitallibrary.utils.Updater;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -28,12 +30,12 @@ public class ItemServiceImpl implements ItemService {
 
 
     @Override
-    public ItemDTO createItem(ItemDTO itemDTO) {
+    public ReturnableItemDTO createItem(SavableItemDTO savableItemDTO) {
         Item item = new Item();
-        item.setUser(userRepository.findById(itemDTO.getUserId()).orElseThrow());
-        Mapper.updateItem(item, itemDTO);
+        item.setUser(userRepository.findById(savableItemDTO.getUserId()).orElseThrow());
+        Updater.updateItem(item, savableItemDTO);
         itemRepository.save(item);
-        return Mapper.mapItemToItemDTO(item);
+        return ItemMapper.mapItemToReturnableDTO(item);
     }
 
     @Override
@@ -46,15 +48,15 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDTO> findAll(Integer page, Integer pageSize) {
+    public List<ReturnableItemDTO> findAll(Integer page, Integer pageSize) {
         List<Item> itemList = itemRepository.findAll(PageRequest.of(page -1, pageSize)).getContent();
-        return itemList.stream().map(Mapper::mapItemToItemDTO).collect(Collectors.toList());
+        return itemList.stream().map(ItemMapper::mapItemToReturnableDTO).collect(Collectors.toList());
     }
 
     @Override
-    public List<ItemDTO> findAllByUserId(Long userId) {
+    public List<ReturnableItemDTO> findAllByUserId(Long userId) {
         List<Item> itemList = itemRepository.findAllItemsByUserId(userId);
-        return itemList.stream().map(Mapper::mapItemToItemDTO).collect(Collectors.toList());
+        return itemList.stream().map(ItemMapper::mapItemToReturnableDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -70,19 +72,19 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDTO findItemById(Long itemId) {
+    public ReturnableItemDTO findItemById(Long itemId) {
         Item item = itemRepository.findById(itemId).orElseThrow();
-        return Mapper.mapItemToItemDTO(item);
+        return ItemMapper.mapItemToReturnableDTO(item);
 
     }
 
     @Override
-    public ItemDTO updateItemById(ItemDTO itemDTO, Long itemId) {
+    public ReturnableItemDTO updateItemById(SavableItemDTO savableItemDTO, Long itemId) {
         Item itemFromDb = itemRepository.findById(itemId).orElseThrow();
-        Mapper.updateItem(itemFromDb, itemDTO);
-        itemFromDb.setUser(userRepository.findById(itemDTO.getUserId()).orElseThrow());
+        Updater.updateItem(itemFromDb, savableItemDTO);
+        itemFromDb.setUser(userRepository.findById(savableItemDTO.getUserId()).orElseThrow());
         itemRepository.save(itemFromDb);
-        return Mapper.mapItemToItemDTO(itemFromDb);
+        return ItemMapper.mapItemToReturnableDTO(itemFromDb);
 
     }
 

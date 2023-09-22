@@ -1,7 +1,8 @@
 package com.ld.digitallibrary.controller;
 
-import com.ld.digitallibrary.dto.FileDTO;
-import com.ld.digitallibrary.dto.ItemDTO;
+import com.ld.digitallibrary.dto.file.FileDTO;
+import com.ld.digitallibrary.dto.item.ReturnableItemDTO;
+import com.ld.digitallibrary.dto.item.SavableItemDTO;
 import com.ld.digitallibrary.service.ItemService;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,8 @@ public class ItemController {
     private final ItemService itemService;
 
     @PostMapping(value = "/item")
-    public ItemDTO createItem(@RequestBody ItemDTO itemDTO) {
-        return itemService.createItem(itemDTO);
+    public ReturnableItemDTO createItem(@RequestBody SavableItemDTO savableItemDTO) {
+        return itemService.createItem(savableItemDTO);
     }
 
     @PostMapping(value = "/item/{itemId}", consumes = MULTIPART_FORM_DATA_VALUE)
@@ -32,13 +33,13 @@ public class ItemController {
     }
 
     @GetMapping("/item/all")
-    public List<ItemDTO> getAllItems(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                     @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+    public List<ReturnableItemDTO> getAllItems(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                               @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
         return itemService.findAll(page, pageSize);
     }
 
     @GetMapping("/item/{itemId}")
-    public ItemDTO getItemById(@PathVariable("itemId") Long itemId) {
+    public ReturnableItemDTO getItemById(@PathVariable("itemId") Long itemId) {
         return itemService.findItemById(itemId);
     }
 
@@ -52,13 +53,14 @@ public class ItemController {
     }
 
     @GetMapping("/item/user/{userId}")
-    public List<ItemDTO> getAllItemsByUserId(@PathVariable("userId") Long userId) {
+    public List<ReturnableItemDTO> getAllItemsByUserId(@PathVariable("userId") Long userId) {
         return itemService.findAllByUserId(userId);
     }
 
     @PutMapping(value = "/item/{itemId}/update")
-    public ItemDTO updateItemById(@PathVariable("itemId") Long itemId, @RequestBody ItemDTO itemDTO) {
-        return itemService.updateItemById(itemDTO, itemId);
+    public ReturnableItemDTO updateItemById(@PathVariable("itemId") Long itemId,
+                                            @RequestBody SavableItemDTO savableItemDTO) {
+        return itemService.updateItemById(savableItemDTO, itemId);
     }
 
     @PutMapping(value = "/item/{userId}/update-file", consumes = MULTIPART_FORM_DATA_VALUE)
