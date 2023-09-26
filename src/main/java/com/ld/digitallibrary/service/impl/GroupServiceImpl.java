@@ -13,12 +13,14 @@ import com.ld.digitallibrary.service.GroupService;
 import com.ld.digitallibrary.utils.GroupMapper;
 import com.ld.digitallibrary.utils.Updater;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class GroupServiceImpl implements GroupService {
@@ -32,6 +34,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public ReturnableGroupDTO createGroup(SavableGroupDTO savableGroupDTO) {
         Group group = groupRepository.save(GroupMapper.mapSavableDTOToGroup(savableGroupDTO));
+        log.info("Group with name: " + group.getName() + " has been saved, with id: " + group.getId());
         return GroupMapper.mapGroupToReturnableDTO(group);
     }
 
@@ -51,6 +54,7 @@ public class GroupServiceImpl implements GroupService {
         Group group = groupRepository.findById(groupId).orElseThrow();
         Updater.updateGroup(group, savableGroupDTO);
         groupRepository.save(group);
+        log.info("Group with id: " + group.getId() + " has been updated");
         return GroupMapper.mapGroupToReturnableDTO(group);
     }
 
@@ -60,6 +64,7 @@ public class GroupServiceImpl implements GroupService {
         User user = userRepository.findById(userId).orElseThrow();
         group.getUsers().add(user);
         groupRepository.save(group);
+        log.info("User, id: " + user.getId() + " has been added to group, id: " + group.getId());
         return GroupMapper.mapGroupToReturnableFullGroupDTO(group);
     }
 
@@ -69,11 +74,13 @@ public class GroupServiceImpl implements GroupService {
         Item item = itemRepository.findById(itemId).orElseThrow();
         group.getItems().add(item);
         groupRepository.save(group);
+        log.info("Item, id: " + item.getId() + " has been added to group, id: " + group.getId());
         return GroupMapper.mapGroupToReturnableFullGroupDTO(group);
     }
 
     @Override
     public void deleteGroupById(long groupId) {
         groupRepository.delete(groupRepository.findById(groupId).orElseThrow());
+        log.info("Group, id: " + groupId + " has been deleted");
     }
 }

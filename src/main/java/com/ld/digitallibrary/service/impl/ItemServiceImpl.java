@@ -11,6 +11,7 @@ import com.ld.digitallibrary.service.S3Service;
 import com.ld.digitallibrary.utils.ItemMapper;
 import com.ld.digitallibrary.utils.Updater;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
@@ -35,6 +37,7 @@ public class ItemServiceImpl implements ItemService {
         item.setUser(userRepository.findById(savableItemDTO.getUserId()).orElseThrow());
         Updater.updateItem(item, savableItemDTO);
         itemRepository.save(item);
+        log.info("Item with id: " + item.getId() + " has been saved");
         return ItemMapper.mapItemToReturnableDTO(item);
     }
 
@@ -44,6 +47,7 @@ public class ItemServiceImpl implements ItemService {
         String filename = s3Service.uploadFile(file);
         item.setName(filename);
         itemRepository.save(item);
+        log.info("File " + filename + " has been uploaded in storage, Item id: " + item.getId());
         return filename;
     }
 
@@ -84,6 +88,7 @@ public class ItemServiceImpl implements ItemService {
         Updater.updateItem(itemFromDb, savableItemDTO);
         itemFromDb.setUser(userRepository.findById(savableItemDTO.getUserId()).orElseThrow());
         itemRepository.save(itemFromDb);
+        log.info("Item with id: " + itemFromDb.getId() + " has been updated");
         return ItemMapper.mapItemToReturnableDTO(itemFromDb);
 
     }
@@ -98,6 +103,7 @@ public class ItemServiceImpl implements ItemService {
     public void deleteFileByItemId(Long itemId) {
         Item item = itemRepository.findById(itemId).orElseThrow();
         s3Service.deleteFile(item.getName());
+        log.info("File " + item.getName() +" has been deleted from storage, Item id: " + item.getId());
         item.setName(null);
         itemRepository.save(item);
     }
