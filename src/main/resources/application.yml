@@ -26,7 +26,7 @@ spring:
 
 aws:
   bucket-name: digital-library
-  access-key-id: accessKey1
-  secret-access-key: verySecretKey1
-  service-endpoint-url: http://0.0.0.0:8000/
-  service-region: us-west-2
+  access-key: accessKey1
+  secret-key: verySecretKey1
+  service-endpoint: http://0.0.0.0:8000/
+  region: us-west-2
