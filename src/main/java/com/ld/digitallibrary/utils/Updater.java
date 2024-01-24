@@ -1,6 +1,5 @@
 package com.ld.digitallibrary.utils;
 
-import com.ld.digitallibrary.dto.group.ReturnableGroupDTO;
 import com.ld.digitallibrary.dto.group.SavableGroupDTO;
 import com.ld.digitallibrary.dto.item.SavableItemDTO;
 import com.ld.digitallibrary.dto.user.ReturnableUserDTO;
@@ -22,22 +21,22 @@ public class Updater {
 
     public static void updateItem(Item item, SavableItemDTO savableItemDTO) {
         if (Objects.nonNull(savableItemDTO)) {
-            if (Objects.nonNull(savableItemDTO.getName())) {
-                item.setName(savableItemDTO.getName());
+            if (Objects.nonNull(savableItemDTO.name())) {
+                item.setName(savableItemDTO.name());
             }
-            if (Objects.nonNull(savableItemDTO.getType())) {
-                item.setType(savableItemDTO.getType());
+            if (Objects.nonNull(savableItemDTO.type())) {
+                item.setType(savableItemDTO.type());
             }
-            if (Objects.nonNull(savableItemDTO.getUploadDate())) {
-                item.setUploadDate(savableItemDTO.getUploadDate());
+            if (Objects.nonNull(savableItemDTO.uploadDate())) {
+                item.setUploadDate(savableItemDTO.uploadDate());
             }
         }
     }
 
     public static void updateGroup(Group group, SavableGroupDTO savableGroupDTO) {
-        if (Objects.nonNull( savableGroupDTO)) {
-            if (Objects.nonNull(savableGroupDTO.getName())) {
-                group.setName( savableGroupDTO.getName());
+        if (Objects.nonNull(savableGroupDTO)) {
+            if (Objects.nonNull(savableGroupDTO.name())) {
+                group.setName( savableGroupDTO.name());
             }
         }
     }

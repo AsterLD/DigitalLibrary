@@ -34,7 +34,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ReturnableItemDTO createItem(SavableItemDTO savableItemDTO) {
         Item item = new Item();
-        item.setUser(userRepository.findById(savableItemDTO.getUserId()).orElseThrow());
+        item.setUser(userRepository.findById(savableItemDTO.userId()).orElseThrow());
         Updater.updateItem(item, savableItemDTO);
         itemRepository.save(item);
         log.info("Item with id: " + item.getId() + " has been saved");
@@ -86,7 +86,7 @@ public class ItemServiceImpl implements ItemService {
     public ReturnableItemDTO updateItemById(SavableItemDTO savableItemDTO, Long itemId) {
         Item itemFromDb = itemRepository.findById(itemId).orElseThrow();
         Updater.updateItem(itemFromDb, savableItemDTO);
-        itemFromDb.setUser(userRepository.findById(savableItemDTO.getUserId()).orElseThrow());
+        itemFromDb.setUser(userRepository.findById(savableItemDTO.userId()).orElseThrow());
         itemRepository.save(itemFromDb);
         log.info("Item with id: " + itemFromDb.getId() + " has been updated");
         return ItemMapper.mapItemToReturnableDTO(itemFromDb);
