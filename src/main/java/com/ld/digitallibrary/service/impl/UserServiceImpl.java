@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<ReturnableUserDTO> findAll(Integer page, Integer pageSize) {
-        List<User> userList = userRepository.findAll(PageRequest.of(page -1, pageSize)).getContent();
+        List<User> userList = userRepository.findAll(PageRequest.of(page - 1, pageSize)).getContent();
         return userList.stream().map(UserMapper::mapUserToReturnableDTO).collect(Collectors.toList());
     }
 

@@ -1,6 +1,5 @@
 package com.ld.digitallibrary.dto.item;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 

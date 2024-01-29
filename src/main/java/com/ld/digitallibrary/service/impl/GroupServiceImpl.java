@@ -1,7 +1,7 @@
 package com.ld.digitallibrary.service.impl;
 
-import com.ld.digitallibrary.dto.group.ReturnableGroupDTO;
 import com.ld.digitallibrary.dto.group.ReturnableFullGroupDTO;
+import com.ld.digitallibrary.dto.group.ReturnableGroupDTO;
 import com.ld.digitallibrary.dto.group.SavableGroupDTO;
 import com.ld.digitallibrary.entity.Group;
 import com.ld.digitallibrary.entity.Item;
@@ -40,7 +40,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public List<ReturnableGroupDTO> findAllGroups(Integer page, Integer pageSize) {
-        List<Group> groupList = groupRepository.findAll(PageRequest.of(page -1, pageSize)).getContent();
+        List<Group> groupList = groupRepository.findAll(PageRequest.of(page - 1, pageSize)).getContent();
         return groupList.stream().map(GroupMapper::mapGroupToReturnableDTO).collect(Collectors.toList());
     }
 

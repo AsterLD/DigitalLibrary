@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 
 
-
 public record SavableItemDTO(@JsonIgnore Long id,
                              @JsonProperty("name") String name,
                              @JsonProperty("item_type") String type,

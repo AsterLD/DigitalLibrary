@@ -17,6 +17,7 @@ import java.io.IOException;
 @Service
 @RequiredArgsConstructor
 public class S3ServiceImpl implements S3Service {
+
     private final AmazonS3 s3client;
 
     @Value("${aws.bucket-name}")

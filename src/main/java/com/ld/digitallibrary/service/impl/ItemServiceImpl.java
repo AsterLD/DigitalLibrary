@@ -53,7 +53,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ReturnableItemDTO> findAll(Integer page, Integer pageSize) {
-        List<Item> itemList = itemRepository.findAll(PageRequest.of(page -1, pageSize)).getContent();
+        List<Item> itemList = itemRepository.findAll(PageRequest.of(page - 1, pageSize)).getContent();
         return itemList.stream().map(ItemMapper::mapItemToReturnableDTO).collect(Collectors.toList());
     }
 
@@ -103,7 +103,7 @@ public class ItemServiceImpl implements ItemService {
     public void deleteFileByItemId(Long itemId) {
         Item item = itemRepository.findById(itemId).orElseThrow();
         s3Service.deleteFile(item.getName());
-        log.info("File " + item.getName() +" has been deleted from storage, Item id: " + item.getId());
+        log.info("File " + item.getName() + " has been deleted from storage, Item id: " + item.getId());
         item.setName(null);
         itemRepository.save(item);
     }
