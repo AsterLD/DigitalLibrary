@@ -3,18 +3,14 @@ package com.ld.digitallibrary.utils;
 import com.ld.digitallibrary.dto.user.ReturnableUserDTO;
 import com.ld.digitallibrary.dto.user.SavableUserDTO;
 import com.ld.digitallibrary.entity.User;
-import org.modelmapper.ModelMapper;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
-public class UserMapper {
 
-    public static ReturnableUserDTO mapUserToReturnableDTO(User user) {
-        ModelMapper mapper = new ModelMapper();
-        return mapper.map(user, ReturnableUserDTO.class);
-    }
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface UserMapper {
+    ReturnableUserDTO toReturnableUserDTO(User source);
 
-    public static User mapSavableDTOToUser(SavableUserDTO savableUserDTO) {
-        ModelMapper mapper = new ModelMapper();
-        return mapper.map(savableUserDTO, User.class);
-    }
+    User toUser(SavableUserDTO source);
 
 }

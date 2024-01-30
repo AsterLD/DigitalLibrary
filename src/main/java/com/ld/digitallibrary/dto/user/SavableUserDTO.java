@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public record SavableUserDTO(@JsonIgnore Long id,
-                             @JsonProperty("username") String username,
+public record SavableUserDTO(@JsonProperty("user_name") String username,
                              @JsonProperty("email") String email) {
 
 }

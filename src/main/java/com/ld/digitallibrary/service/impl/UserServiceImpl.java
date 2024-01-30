@@ -22,24 +22,26 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private final UserMapper userMapper;
+
     @Override
     public ReturnableUserDTO createUser(SavableUserDTO savableUserDTO) {
-        User user = UserMapper.mapSavableDTOToUser(savableUserDTO);
+        User user = userMapper.toUser(savableUserDTO);
         userRepository.save(user);
         log.info("User with id: " + user.getId() + " has been saved");
-        return UserMapper.mapUserToReturnableDTO(user);
+        return userMapper.toReturnableUserDTO(user);
     }
 
     @Override
     public List<ReturnableUserDTO> findAll(Integer page, Integer pageSize) {
         List<User> userList = userRepository.findAll(PageRequest.of(page - 1, pageSize)).getContent();
-        return userList.stream().map(UserMapper::mapUserToReturnableDTO).collect(Collectors.toList());
+        return userList.stream().map(userMapper::toReturnableUserDTO).collect(Collectors.toList());
     }
 
     @Override
     public ReturnableUserDTO findUserById(long id) {
         User user = userRepository.findById(id).orElseThrow();
-        return UserMapper.mapUserToReturnableDTO(user);
+        return userMapper.toReturnableUserDTO(user);
     }
 
     @Override
@@ -48,7 +50,7 @@ public class UserServiceImpl implements UserService {
         Updater.updateUser(user, returnableUserDTO);
         userRepository.save(user);
         log.info("User with id: " + user.getId() + " has been updated");
-        return UserMapper.mapUserToReturnableDTO(user);
+        return userMapper.toReturnableUserDTO(user);
     }
 
     @Override

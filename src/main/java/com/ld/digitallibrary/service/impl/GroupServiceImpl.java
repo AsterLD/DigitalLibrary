@@ -31,22 +31,24 @@ public class GroupServiceImpl implements GroupService {
 
     private final ItemRepository itemRepository;
 
+    private final GroupMapper groupMapper;
+
     @Override
     public ReturnableGroupDTO createGroup(SavableGroupDTO savableGroupDTO) {
-        Group group = groupRepository.save(GroupMapper.mapSavableDTOToGroup(savableGroupDTO));
+        Group group = groupRepository.save(groupMapper.toGroup(savableGroupDTO));
         log.info("Group with name: " + group.getName() + " has been saved, with id: " + group.getId());
-        return GroupMapper.mapGroupToReturnableDTO(group);
+        return groupMapper.toReturnableDTO(group);
     }
 
     @Override
     public List<ReturnableGroupDTO> findAllGroups(Integer page, Integer pageSize) {
         List<Group> groupList = groupRepository.findAll(PageRequest.of(page - 1, pageSize)).getContent();
-        return groupList.stream().map(GroupMapper::mapGroupToReturnableDTO).collect(Collectors.toList());
+        return groupList.stream().map(groupMapper::toReturnableDTO).collect(Collectors.toList());
     }
 
     @Override
     public ReturnableFullGroupDTO findGroupById(long groupId) {
-        return GroupMapper.mapGroupToReturnableFullGroupDTO(groupRepository.findById(groupId).orElseThrow());
+        return groupMapper.toReturnableFullGroupDTO(groupRepository.findById(groupId).orElseThrow());
     }
 
     @Override
@@ -55,7 +57,7 @@ public class GroupServiceImpl implements GroupService {
         Updater.updateGroup(group, savableGroupDTO);
         groupRepository.save(group);
         log.info("Group with id: " + group.getId() + " has been updated");
-        return GroupMapper.mapGroupToReturnableDTO(group);
+        return groupMapper.toReturnableDTO(group);
     }
 
     @Override
@@ -65,7 +67,7 @@ public class GroupServiceImpl implements GroupService {
         group.getUsers().add(user);
         groupRepository.save(group);
         log.info("User, id: " + user.getId() + " has been added to group, id: " + group.getId());
-        return GroupMapper.mapGroupToReturnableFullGroupDTO(group);
+        return groupMapper.toReturnableFullGroupDTO(group);
     }
 
     @Override
@@ -75,7 +77,7 @@ public class GroupServiceImpl implements GroupService {
         group.getItems().add(item);
         groupRepository.save(group);
         log.info("Item, id: " + item.getId() + " has been added to group, id: " + group.getId());
-        return GroupMapper.mapGroupToReturnableFullGroupDTO(group);
+        return groupMapper.toReturnableFullGroupDTO(group);
     }
 
     @Override

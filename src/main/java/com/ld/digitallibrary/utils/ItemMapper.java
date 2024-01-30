@@ -3,18 +3,14 @@ package com.ld.digitallibrary.utils;
 import com.ld.digitallibrary.dto.item.ReturnableItemDTO;
 import com.ld.digitallibrary.dto.item.SavableItemDTO;
 import com.ld.digitallibrary.entity.Item;
-import org.modelmapper.ModelMapper;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
-public class ItemMapper {
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface ItemMapper {
 
-    public static ReturnableItemDTO mapItemToReturnableDTO(Item item) {
-        ModelMapper mapper = new ModelMapper();
-        return mapper.map(item, ReturnableItemDTO.class);
-    }
+    ReturnableItemDTO toItemToReturnableDTO(Item item);
 
-    public static Item mapSavableDTOtoItem(SavableItemDTO savableItemDTO) {
-        ModelMapper mapper = new ModelMapper();
-        return mapper.map(savableItemDTO, Item.class);
-    }
+    Item toItem(SavableItemDTO savableItemDTO);
 
 }

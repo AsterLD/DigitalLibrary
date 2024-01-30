@@ -28,6 +28,8 @@ public class ItemServiceImpl implements ItemService {
 
     private final UserRepository userRepository;
 
+    public final ItemMapper itemMapper;
+
     private final S3Service s3Service;
 
 
@@ -38,7 +40,7 @@ public class ItemServiceImpl implements ItemService {
         Updater.updateItem(item, savableItemDTO);
         itemRepository.save(item);
         log.info("Item with id: " + item.getId() + " has been saved");
-        return ItemMapper.mapItemToReturnableDTO(item);
+        return itemMapper.toItemToReturnableDTO(item);
     }
 
     @Override
@@ -54,13 +56,13 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<ReturnableItemDTO> findAll(Integer page, Integer pageSize) {
         List<Item> itemList = itemRepository.findAll(PageRequest.of(page - 1, pageSize)).getContent();
-        return itemList.stream().map(ItemMapper::mapItemToReturnableDTO).collect(Collectors.toList());
+        return itemList.stream().map(itemMapper::toItemToReturnableDTO).collect(Collectors.toList());
     }
 
     @Override
     public List<ReturnableItemDTO> findAllByUserId(Long userId) {
         List<Item> itemList = itemRepository.findAllItemsByUserId(userId);
-        return itemList.stream().map(ItemMapper::mapItemToReturnableDTO).collect(Collectors.toList());
+        return itemList.stream().map(itemMapper::toItemToReturnableDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -78,7 +80,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ReturnableItemDTO findItemById(Long itemId) {
         Item item = itemRepository.findById(itemId).orElseThrow();
-        return ItemMapper.mapItemToReturnableDTO(item);
+        return itemMapper.toItemToReturnableDTO(item);
 
     }
 
@@ -89,7 +91,7 @@ public class ItemServiceImpl implements ItemService {
         itemFromDb.setUser(userRepository.findById(savableItemDTO.userId()).orElseThrow());
         itemRepository.save(itemFromDb);
         log.info("Item with id: " + itemFromDb.getId() + " has been updated");
-        return ItemMapper.mapItemToReturnableDTO(itemFromDb);
+        return itemMapper.toItemToReturnableDTO(itemFromDb);
 
     }
 
