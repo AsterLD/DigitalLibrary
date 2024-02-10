@@ -36,7 +36,7 @@ public class Updater {
     public static void updateGroup(Group group, SavableGroupDTO savableGroupDTO) {
         if (Objects.nonNull(savableGroupDTO)) {
             if (Objects.nonNull(savableGroupDTO.name())) {
-                group.setName( savableGroupDTO.name());
+                group.setName(savableGroupDTO.name());
             }
         }
     }
